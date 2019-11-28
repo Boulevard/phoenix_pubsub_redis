@@ -43,6 +43,7 @@ defmodule Phoenix.PubSub.Redis do
   """
 
   @redis_pool_size 5
+  @redis_opts [:host, :port, :password, :database, :ssl, :socket_opts]
   @defaults [host: "127.0.0.1", port: 6379]
 
 
@@ -57,7 +58,7 @@ defmodule Phoenix.PubSub.Redis do
 
     opts = handle_url_opts(opts)
     opts = Keyword.merge(@defaults, opts)
-    redis_opts = Keyword.take(opts, [:host, :port, :password, :database, :ssl])
+    redis_opts = Keyword.take(opts, @redis_opts)
 
     pool_name   = Module.concat(server_name, Pool)
     namespace   = redis_namespace(server_name)
